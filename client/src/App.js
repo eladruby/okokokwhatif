@@ -1,19 +1,15 @@
-import React, {Fragment} from "react";
-import './App.css';
-
-import InputTodo from "./components/InputTodo";
-import ListTodos from "./components/ListTodos";
-
+import React, {useEffect, useState} from 'react'
+import './App.css'
+import SignUp from './components/SignUp'
+import Login from './components/Login'
 
 function App() {
   return (
-    <Fragment>
-      <div className="container">
-        <InputTodo />
-        <ListTodos />
-      </div>
-    </Fragment>
+    <div>
+      <SignUp/>
+      <Login/>
+    </div>
   )
 }
 
-export default App;
+export default App

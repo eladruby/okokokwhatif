@@ -1,0 +1,31 @@
+.App {
+    display: flex;
+    justify-content: center;
+}
+
+h1, label, input{
+    display: block;
+}
+
+h1{
+    text-align: center;
+}
+
+button{
+    margin-left: 45px;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    background-color: rgb(22, 140, 22);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+button:hover {
+    opacity: 70%;
+}

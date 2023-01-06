@@ -7,56 +7,26 @@ app.use(cors());
 app.use(express.json());
 
 
-app.post("/todos", async (req, res) =>{
+app.post("/signup", async (req, res) =>{
     try{
-        const {description} = req.body
-        const newTodo = await pool.query("INSERT INTO todo (description) VALUES($1) RETURNING *", [description])
-        res.json(newTodo.rows)
+        const {firstname, lastname, username, email, password} = req.body
+        const signUp = await pool.query("INSERT INTO user_info (firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *", [firstname, lastname, username, email, password])
+        res.send(signUp.rows)
     } catch (err) {
         console.error(err.message)
     }
 })
 
-app.get("/todos", async (req, res) =>{
-    try{
-        const allTodo = await pool.query("SELECT * FROM todo")
-        res.json(allTodo.rows)
-    } catch (err) {
-        console.error(err.message)
+app.post("/login", async (req, res) => {
+    try {
+        const {username, password} = req.body
+        const logIn = await pool.query("SELECT * FROM user_info WHERE username=($1) AND password=($2)", [username, password])
+        res.send(logIn.rows)
+    } catch (error) {
+        console.error(error.message);
+        res.send("error")
     }
 })
-
-app.get("/todos/:id", async (req, res) =>{
-    try{
-        const {id} = req.params
-        const todo = await pool.query("SELECT * FROM todo WHERE todo_id = $1", [id])
-        res.json(todo.rows)
-    } catch (err) {
-        console.error(err.message)
-    }
-})
-
-app.put("/todos/:id", async (req, res) =>{
-    try{
-        const {id} = req.params
-        const {description} = req.body
-        const updateTodo = await pool.query("UPDATE todo SET description = $1 WHERE todo_id = $2", [description, id])
-        res.json("Todo was updated")
-    } catch (err) {
-        console.error(err.message)
-    }
-})
-
-app.delete("/todos/:id", async (req, res) =>{
-    try{
-        const {id} = req.params
-        const deleteTodo = await pool.query("DELETE FROM todo WHERE todo_id = $1", [id])
-        res.json("Todo was deleted")
-    } catch (err) {
-        console.error(err.message)
-    }
-})
-
 
 app.listen(5000, () =>{
     console.log("server is running on port 5000")
