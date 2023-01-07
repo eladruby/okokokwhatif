@@ -11,9 +11,24 @@ function SignUp() {
     const [reEnterPasswordReg, setReEnterPasswordReg] = useState("");
     const [SignUpStatus, setSignUpStatus] = useState("");
     const [EmailFormatStatus, setEmailFormatStatus] = useState("");
+    const [PasswordStatus, setPasswordStatus] = useState("");
 
     const signup = () => {
-        if (emailReg.includes("@gmail.com") && emailReg.length > 13){
+        let allGood = true
+        if (passwordReg != reEnterPasswordReg){
+            allGood = false
+            setPasswordStatus("Passwords are not matching")
+        } else{
+            setPasswordStatus("")
+        }
+        if (!(emailReg.includes("@gmail.com")) || !(emailReg.length > 13)){
+            allGood = false
+            setEmailFormatStatus("Error, email doesn't exist")
+        } else{
+            setEmailFormatStatus("")
+        }
+
+        if(allGood){
             Axios.post('http://localhost:5000/signup', { firstname: firstNameReg, 
                                 lastname: lastNameReg, 
                                 username: userNameReg, 
@@ -22,9 +37,8 @@ function SignUp() {
                                 console.log(response) 
                                 })
             setSignUpStatus("You've just Signed Up")
-        }
-        else{
-            setEmailFormatStatus("Error, email doesn't exist")
+        } else {
+            setSignUpStatus("Please check out your input")
         }
     };
 
@@ -57,6 +71,7 @@ function SignUp() {
             <input type={"password"} onChange={(event) => {
                 setReEnterPasswordReg(event.target.value);
             }}/>
+            <h1>{PasswordStatus}</h1>
             <h1>{SignUpStatus}</h1>
             <button onClick={signup}>Sign Up</button>
         </div>
