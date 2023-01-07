@@ -12,6 +12,7 @@ function SignUp() {
     const [SignUpStatus, setSignUpStatus] = useState("");
     const [EmailFormatStatus, setEmailFormatStatus] = useState("");
     const [PasswordStatus, setPasswordStatus] = useState("");
+    const [userNameExist, setUserNameExist] = useState("");
 
     const signup = () => {
         let allGood = true
@@ -21,11 +22,25 @@ function SignUp() {
         } else{
             setPasswordStatus("")
         }
+
         if (!(emailReg.includes("@gmail.com")) || !(emailReg.length > 13)){
             allGood = false
             setEmailFormatStatus("Error, email doesn't exist")
         } else{
             setEmailFormatStatus("")
+        }
+
+        const params = userNameReg
+        if(allGood){
+            Axios.get(`http://localhost:5000/userexist/${params}`).then((response) => {
+                console.log(response)
+                if (response.data){
+                    allGood = false
+                    setUserNameExist("Username already exist")
+                } else{
+                    setUserNameExist("")
+                } 
+            }) 
         }
 
         if(allGood){
@@ -58,6 +73,7 @@ function SignUp() {
             <input type={"text"} onChange={(event) => {
                 setUserNameReg(event.target.value);
             }}/>
+            <h1>{userNameExist}</h1>
             <label>Email</label>
             <input type={"email"} onChange={(event) => {
                 setEmailReg(event.target.value);
