@@ -28,6 +28,20 @@ app.post("/login", async (req, res) => {
     }
 })
 
+app.get('/userexist/:username', async (req, res) => {
+    try {
+        const username = req.params.username
+        const isExist = await pool.query("SELECT * FROM user_info WHERE username=($1)", [username])
+        if(isExist.rows.length != 0){
+            res.send(true)
+        } else { 
+            res.send(false) 
+        }
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
 app.listen(5000, () =>{
     console.log("server is running on port 5000")
 })
