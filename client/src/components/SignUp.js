@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './SignUp.css';
 import Axios from 'axios';
+
+
 
 function SignUp() {
     const [firstNameReg, setFirstNameReg] = useState("");
@@ -15,6 +17,7 @@ function SignUp() {
     const [userNameExist, setUserNameExist] = useState("");
 
     const signup = () => {
+
         let allGood = true
         if (passwordReg != reEnterPasswordReg){
             allGood = false
@@ -62,7 +65,7 @@ function SignUp() {
         <div className='signup'>
             <h1>Sign Up</h1>
             <label>First Name</label>
-            <input type={"text"} onChange={(event) => {
+            <input className='textbox' type={"text"} onChange={(event) => {
                 setFirstNameReg(event.target.value);
             }}/>
             <label>Last Name</label>
