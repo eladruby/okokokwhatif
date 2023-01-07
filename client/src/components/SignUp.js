@@ -9,16 +9,25 @@ function SignUp() {
     const [emailReg, setEmailReg] = useState("");
     const [passwordReg, setPasswordReg] = useState("");
     const [reEnterPasswordReg, setReEnterPasswordReg] = useState("");
+    const [SignUpStatus, setSignUpStatus] = useState("");
+    const [EmailFormatStatus, setEmailFormatStatus] = useState("");
 
     const signup = () => {
-        Axios.post('http://localhost:5000/signup', { firstname: firstNameReg, 
+        if (emailReg.includes("@gmail.com") && emailReg.length > 13){
+            Axios.post('http://localhost:5000/signup', { firstname: firstNameReg, 
                                 lastname: lastNameReg, 
                                 username: userNameReg, 
                                 email: emailReg, 
                                 password: passwordReg }).then((response) => {
                                 console.log(response) 
                                 })
+            setSignUpStatus("You've just Signed Up")
+        }
+        else{
+            setEmailFormatStatus("Error, email doesn't exist")
+        }
     };
+
   return (
     <div className='App'>
         <div className='signup'>
@@ -39,6 +48,7 @@ function SignUp() {
             <input type={"email"} onChange={(event) => {
                 setEmailReg(event.target.value);
             }}/>
+            <h1>{EmailFormatStatus}</h1>
             <label>Password</label>
             <input type={"password"} onChange={(event) => {
                 setPasswordReg(event.target.value);
@@ -47,6 +57,7 @@ function SignUp() {
             <input type={"password"} onChange={(event) => {
                 setReEnterPasswordReg(event.target.value);
             }}/>
+            <h1>{SignUpStatus}</h1>
             <button onClick={signup}>Sign Up</button>
         </div>
     </div>
