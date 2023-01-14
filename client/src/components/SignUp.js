@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import './SignUp.css';
+import React, {useState} from 'react';
+// import './SignUp.css';
+import { Container , StyledHeader, StyledLabel, StyledInput, StyledButton, StyledErrMessage} from './styles/SingUp.style';
 import Axios from 'axios';
-
-
 
 function SignUp() {
     const [firstNameReg, setFirstNameReg] = useState("");
@@ -15,39 +14,48 @@ function SignUp() {
     const [EmailFormatStatus, setEmailFormatStatus] = useState("");
     const [PasswordStatus, setPasswordStatus] = useState("");
     const [userNameExist, setUserNameExist] = useState("");
+    const [isPasswordValid, setIsPasswordValid] = useState(true);
+    const [isEmailValid, setIsEmailValid] = useState(true);
+    const [isUsernameValid, setIsUsernameValid] = useState(true);
 
-    const signup = () => {
+    const signup = async () => {
 
         let allGood = true
-        if (passwordReg != reEnterPasswordReg){
+        if (passwordReg !== reEnterPasswordReg){
             allGood = false
             setPasswordStatus("Passwords are not matching")
+            setIsPasswordValid(false)
         } else{
             setPasswordStatus("")
+            setIsPasswordValid(true)
         }
 
         if (!(emailReg.includes("@gmail.com")) || !(emailReg.length > 13)){
             allGood = false
-            setEmailFormatStatus("Error, email doesn't exist")
+            setEmailFormatStatus("Email doesn't exist")
+            setIsEmailValid(false)
         } else{
             setEmailFormatStatus("")
+            setIsEmailValid(true)
         }
 
         const params = userNameReg
         if(allGood){
-            Axios.get(`http://localhost:5000/userexist/${params}`).then((response) => {
+            await Axios.get(`http://localhost:5000/userexist/${params}`).then((response) => {
                 console.log(response)
                 if (response.data){
                     allGood = false
                     setUserNameExist("Username already exist")
+                    setIsUsernameValid(false)
                 } else{
                     setUserNameExist("")
+                    setIsUsernameValid(true)
                 } 
             }) 
         }
 
         if(allGood){
-            Axios.post('http://localhost:5000/signup', { firstname: firstNameReg, 
+            await Axios.post('http://localhost:5000/signup', { firstname: firstNameReg, 
                                 lastname: lastNameReg, 
                                 username: userNameReg, 
                                 email: emailReg, 
@@ -61,40 +69,42 @@ function SignUp() {
     };
 
   return (
-    <div className='App'>
-        <div className='signup'>
-            <h1>Sign Up</h1>
-            <label>First Name</label>
-            <input className='textbox' type={"text"} onChange={(event) => {
+    <Container>
+        <div>
+            <StyledHeader>
+                <h1>Sign Up</h1>
+            </StyledHeader>
+            <StyledLabel>First Name</StyledLabel>
+            <StyledInput isValid={true} type={"text"} onChange={(event) => {
                 setFirstNameReg(event.target.value);
             }}/>
-            <label>Last Name</label>
-            <input type={"text"} onChange={(event) => {
+            <StyledLabel>Last Name</StyledLabel>
+            <StyledInput isValid={true} type={"text"} onChange={(event) => {
                 setLastNameReg(event.target.value);
             }}/>
-            <label>Username</label>
-            <input type={"text"} onChange={(event) => {
+            <StyledLabel>Username</StyledLabel>
+            <StyledInput isValid={isUsernameValid} type={"text"} onChange={(event) => {
                 setUserNameReg(event.target.value);
             }}/>
-            <h1>{userNameExist}</h1>
-            <label>Email</label>
-            <input type={"email"} onChange={(event) => {
+            <StyledErrMessage>{userNameExist}</StyledErrMessage>
+            <StyledLabel>Email</StyledLabel>
+            <StyledInput isValid={isEmailValid} type={"email"} onChange={(event) => {
                 setEmailReg(event.target.value);
             }}/>
-            <h1>{EmailFormatStatus}</h1>
-            <label>Password</label>
-            <input type={"password"} onChange={(event) => {
+            <StyledErrMessage>{EmailFormatStatus}</StyledErrMessage>
+            <StyledLabel>Password</StyledLabel>
+            <StyledInput isValid={isPasswordValid} type={"password"} onChange={(event) => {
                 setPasswordReg(event.target.value);
             }}/>
-            <label>Re-Enter Password</label>
-            <input type={"password"} onChange={(event) => {
+            <StyledLabel>Re-Enter Password</StyledLabel>
+            <StyledInput isValid={isPasswordValid} type={"password"} onChange={(event) => {
                 setReEnterPasswordReg(event.target.value);
             }}/>
-            <h1>{PasswordStatus}</h1>
-            <h1>{SignUpStatus}</h1>
-            <button onClick={signup}>Sign Up</button>
+            <StyledErrMessage>{PasswordStatus}</StyledErrMessage>
+            <StyledHeader><h3>{SignUpStatus}</h3></StyledHeader>
+            <StyledButton onClick={signup}>Sign Up</StyledButton>
         </div>
-    </div>
+    </Container>
   )
 }
 
