@@ -1,22 +1,28 @@
 import React, {useState} from 'react';
 // import './SignUp.css';
-import { Container , StyledHeader, StyledLabel, StyledInput, StyledButton, StyledErrMessage} from './styles/SingUp.style';
+import { Logo, Container , StyledHeader, StyledLink, StyledInput, StyledButton, StyledErrMessage} from './styles/SingUp.style';
 import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+    //Values
     const [firstNameReg, setFirstNameReg] = useState("");
     const [lastNameReg, setLastNameReg] = useState("");
     const [userNameReg, setUserNameReg] = useState("");
     const [emailReg, setEmailReg] = useState("");
     const [passwordReg, setPasswordReg] = useState("");
     const [reEnterPasswordReg, setReEnterPasswordReg] = useState("");
+    //Status
     const [SignUpStatus, setSignUpStatus] = useState("");
     const [EmailFormatStatus, setEmailFormatStatus] = useState("");
     const [PasswordStatus, setPasswordStatus] = useState("");
+    //DB Checking
     const [userNameExist, setUserNameExist] = useState("");
+    //Validation
     const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isUsernameValid, setIsUsernameValid] = useState(true);
+    const [isError, setIsError] = useState(true);
 
     const signup = async () => {
 
@@ -63,46 +69,42 @@ function SignUp() {
                                 console.log(response) 
                                 })
             setSignUpStatus("You've just Signed Up")
+            setIsError(true)
         } else {
             setSignUpStatus("Please check out your input")
+            setIsError(false)
         }
     };
 
+    let navigate = useNavigate();
   return (
     <Container>
         <div>
-            <StyledHeader>
-                <h1>Sign Up</h1>
-            </StyledHeader>
-            <StyledLabel>First Name</StyledLabel>
-            <StyledInput isValid={true} type={"text"} onChange={(event) => {
+            <Logo><img src='https://st2.depositphotos.com/3867453/6458/v/450/depositphotos_64580437-stock-illustration-letter-e-logo-icon-design.jpg'/></Logo>
+            <StyledInput isValid={true} placeholder={"First Name"} type={"text"} onChange={(event) => {
                 setFirstNameReg(event.target.value);
             }}/>
-            <StyledLabel>Last Name</StyledLabel>
-            <StyledInput isValid={true} type={"text"} onChange={(event) => {
+            <StyledInput isValid={true} placeholder={"Last Name"} type={"text"} onChange={(event) => {
                 setLastNameReg(event.target.value);
             }}/>
-            <StyledLabel>Username</StyledLabel>
-            <StyledInput isValid={isUsernameValid} type={"text"} onChange={(event) => {
+            <StyledInput isValid={isUsernameValid} placeholder={"Username"} type={"text"} onChange={(event) => {
                 setUserNameReg(event.target.value);
             }}/>
-            <StyledErrMessage>{userNameExist}</StyledErrMessage>
-            <StyledLabel>Email</StyledLabel>
-            <StyledInput isValid={isEmailValid} type={"email"} onChange={(event) => {
+            <StyledErrMessage value={SignUpStatus}><h1>{userNameExist}</h1></StyledErrMessage>
+            <StyledInput isValid={isEmailValid} placeholder={"Email"} type={"email"} onChange={(event) => {
                 setEmailReg(event.target.value);
             }}/>
-            <StyledErrMessage>{EmailFormatStatus}</StyledErrMessage>
-            <StyledLabel>Password</StyledLabel>
-            <StyledInput isValid={isPasswordValid} type={"password"} onChange={(event) => {
+            <StyledErrMessage value={EmailFormatStatus}><h1>{EmailFormatStatus}</h1></StyledErrMessage>
+            <StyledInput isValid={isPasswordValid} placeholder={"Password"} type={"password"} onChange={(event) => {
                 setPasswordReg(event.target.value);
             }}/>
-            <StyledLabel>Re-Enter Password</StyledLabel>
-            <StyledInput isValid={isPasswordValid} type={"password"} onChange={(event) => {
+            <StyledInput isValid={isPasswordValid} placeholder={"Confirm Password"} type={"password"} onChange={(event) => {
                 setReEnterPasswordReg(event.target.value);
             }}/>
-            <StyledErrMessage>{PasswordStatus}</StyledErrMessage>
-            <StyledHeader><h3>{SignUpStatus}</h3></StyledHeader>
+            <StyledErrMessage><h1>{PasswordStatus}</h1></StyledErrMessage>
+            <StyledErrMessage error={isError} value={SignUpStatus}><h3>{SignUpStatus}</h3></StyledErrMessage>
             <StyledButton onClick={signup}>Sign Up</StyledButton>
+            <StyledLink onClick={() => {navigate('/login')}}><a>Already have an account?</a></StyledLink>
         </div>
     </Container>
   )
