@@ -1,6 +1,6 @@
 import React from 'react';
 import { ErrorContainer} from './styles/SingUp.style';
-import { useParams, Route, Redirect } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function Profile() {
     let {username} = useParams();

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 // import './SignUp.css';
-import { Logo, Container , StyledHeader, StyledLink, StyledInput, StyledButton, StyledErrMessage} from './styles/SingUp.style';
+import { Logo, Container , StyledLink, StyledInput, StyledButton, StyledErrMessage} from './styles/SingUp.style';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -80,7 +80,7 @@ function SignUp() {
   return (
     <Container>
         <div>
-            <Logo><img src='https://st2.depositphotos.com/3867453/6458/v/450/depositphotos_64580437-stock-illustration-letter-e-logo-icon-design.jpg'/></Logo>
+            <Logo><img src='https://st2.depositphotos.com/3867453/6458/v/450/depositphotos_64580437-stock-illustration-letter-e-logo-icon-design.jpg' alt='logo'/></Logo>
             <StyledInput isValid={true} placeholder={"First Name"} type={"text"} onChange={(event) => {
                 setFirstNameReg(event.target.value);
             }}/>
@@ -104,7 +104,7 @@ function SignUp() {
             <StyledErrMessage><h1>{PasswordStatus}</h1></StyledErrMessage>
             <StyledErrMessage error={isError} value={SignUpStatus}><h3>{SignUpStatus}</h3></StyledErrMessage>
             <StyledButton onClick={signup}>Sign Up</StyledButton>
-            <StyledLink onClick={() => {navigate('/login')}}><a>Already have an account?</a></StyledLink>
+            <StyledLink onClick={() => {navigate('/login')}}>Already have an account?</StyledLink>
         </div>
     </Container>
   )
