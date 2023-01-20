@@ -14,6 +14,16 @@ export const Container = styled.div`
     div{
         width: 100%;
     }
+
+    main {
+        position: relative;
+        margin: 0;
+    }
+
+    span {
+        position: absolute;
+        padding: 0;
+    }
     
 `
 
@@ -75,15 +85,56 @@ export const StyledButton = styled.button`
     }
 `
 
-export const ShowPasswordButton = styled.button`
+export const ShowPasswordButton1 = styled.button`
     font-size: 20px;
     width: 1.5em;
-    height: 1.5em;
     padding: 0;
-    background: transparent;
     border: none;
     cursor: pointer;
+    position:absolute;
+    top: 25%;
+    left: 325px;
+    transform: translateY(-50%);
+    opacity: 30%;
+    transition: opacity 0.2s ;
 
+    &:hover{
+        opacity: 100%;
+    }
+`
+export const ShowPasswordButton2 = styled.button`
+    font-size: 20px;
+    width: 1.5em;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    position:absolute;
+    top: 77%;
+    left: 325px;
+    transform: translateY(-50%);
+    opacity: 30%;
+    transition: opacity 0.2s ;
+
+    &:hover{
+        opacity: 100%;
+    }
+`
+
+export const ShowPasswordButton3 = styled.button`
+    font-size: 20px;
+    width: 1.5em;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    position:absolute;
+    left: 325px;
+    transform: translateY(-240%);
+    opacity: 30%;
+    transition: opacity 0.2s ;
+
+    &:hover{
+        opacity: 100%;
+    }
 `
 
 export const StyledErrMessage = styled.label`
