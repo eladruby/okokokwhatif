@@ -44,7 +44,7 @@ function Login() {
             <StyledInput isValid={UserDetailsValid} placeholder={"Username"} type={"text"} onChange={(event) => {
                 setUserName(event.target.value);
             }}/>
-            <StyledInput isValid={UserDetailsValid} placeholder={"Password"} type={showConfirmPassword ? "text" : "password"} onChange={(event) => {
+            <StyledInput isValid={UserDetailsValid} placeholder={"Password"} type={showPassword ? "text" : "password"} onChange={(event) => {
                 setPassword(event.target.value);
             }}/>
             <span>
