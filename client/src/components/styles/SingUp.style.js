@@ -43,6 +43,8 @@ export const StyledInput = styled.input`
         padding: 11px 3px 1px 3px;
     }
     
+    padding: 0.5em;
+    border: 1px solid #ccc;
 `;
 
 export const StyledHeader = styled.header`
@@ -71,6 +73,17 @@ export const StyledButton = styled.button`
     &:hover{
         opacity: 85%;
     }
+`
+
+export const ShowPasswordButton = styled.button`
+    font-size: 20px;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
 `
 
 export const StyledErrMessage = styled.label`

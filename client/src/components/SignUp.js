@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-// import './SignUp.css';
-import { Logo, Container , StyledLink, StyledInput, StyledButton, StyledErrMessage} from './styles/SingUp.style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { Logo, Container , StyledLink, StyledInput, StyledButton, StyledErrMessage, ShowPasswordButton} from './styles/SingUp.style';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,6 +24,14 @@ function SignUp() {
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isUsernameValid, setIsUsernameValid] = useState(true);
     const [isError, setIsError] = useState(true);
+    //Reveal Password
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const handleClick = (whichPassword) => {
+        if (whichPassword === "originalPassword") setShowPassword(!showPassword);
+        else setShowConfirmPassword(!showConfirmPassword);
+    }
 
     const signup = async () => {
 
@@ -95,12 +104,15 @@ function SignUp() {
                 setEmailReg(event.target.value);
             }}/>
             <StyledErrMessage value={EmailFormatStatus}><h1>{EmailFormatStatus}</h1></StyledErrMessage>
-            <StyledInput isValid={isPasswordValid} placeholder={"Password"} type={"password"} onChange={(event) => {
+            <StyledInput isValid={isPasswordValid} placeholder={"Password"} type={showPassword ? "text" : "password"} onChange={(event) => {
                 setPasswordReg(event.target.value);
             }}/>
-            <StyledInput isValid={isPasswordValid} placeholder={"Confirm Password"} type={"password"} onChange={(event) => {
+            <ShowPasswordButton onClick={() => handleClick("originalPassword")}><FontAwesomeIcon icon={faEyeSlash} /></ShowPasswordButton>
+        
+            <StyledInput isValid={isPasswordValid} placeholder={"Confirm Password"} type={showConfirmPassword ? "text" : "password"} onChange={(event) => {
                 setReEnterPasswordReg(event.target.value);
             }}/>
+            <ShowPasswordButton onClick={() => handleClick("confirmPassword")}><FontAwesomeIcon icon={faEyeSlash} /></ShowPasswordButton>
             <StyledErrMessage><h1>{PasswordStatus}</h1></StyledErrMessage>
             <StyledErrMessage error={isError} value={SignUpStatus}><h3>{SignUpStatus}</h3></StyledErrMessage>
             <StyledButton onClick={signup}>Sign Up</StyledButton>
