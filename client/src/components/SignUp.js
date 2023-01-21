@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { Logo, Container , StyledLink, StyledInput, StyledButton, StyledErrMessage, ShowPasswordButton1, ShowPasswordButton2} from './styles/SingUp.style';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
 
 function SignUp() {
     //Values
@@ -91,41 +89,40 @@ function SignUp() {
     };
 
     let navigate = useNavigate();
+    
   return (
-    <Container>
-        <div>
-            <Logo><img src='https://st2.depositphotos.com/3867453/6458/v/450/depositphotos_64580437-stock-illustration-letter-e-logo-icon-design.jpg' alt='logo'/></Logo>
-            <StyledInput isValid={true} placeholder={"First Name"} type={"text"} onChange={(event) => {
-                setFirstNameReg(event.target.value);
-            }}/>
-            <StyledInput isValid={true} placeholder={"Last Name"} type={"text"} onChange={(event) => {
-                setLastNameReg(event.target.value);
-            }}/>
-            <StyledInput isValid={isUsernameValid} placeholder={"Username"} type={"text"} onChange={(event) => {
-                setUserNameReg(event.target.value);
-            }}/>
-            <StyledErrMessage value={SignUpStatus}><h1>{userNameExist}</h1></StyledErrMessage>
-            <StyledInput isValid={isEmailValid} placeholder={"Email"} type={"email"} onChange={(event) => {
-                setEmailReg(event.target.value);
-            }}/>
-            <StyledErrMessage value={EmailFormatStatus}><h1>{EmailFormatStatus}</h1></StyledErrMessage>
-            <main>
-            <StyledInput isValid={isPasswordValid} placeholder={"Password"} type={showPassword ? "text" : "password"} onChange={(event) => {
-                setPasswordReg(event.target.value);
-            }}/>
-            <ShowPasswordButton1 onClick={() => handleClick("originalPassword")}><FontAwesomeIcon icon={faEyeSlash} /></ShowPasswordButton1>
-        
-            <StyledInput isValid={isPasswordValid} placeholder={"Confirm Password"} type={showConfirmPassword ? "text" : "password"} onChange={(event) => {
-                setReEnterPasswordReg(event.target.value);
-            }}/>
-            <ShowPasswordButton2 onClick={() => handleClick("confirmPassword")}><FontAwesomeIcon icon={faEyeSlash} /></ShowPasswordButton2>
-            </main>
-            <StyledErrMessage><h1>{PasswordStatus}</h1></StyledErrMessage>
-            <StyledErrMessage error={isError} value={SignUpStatus}><h3>{SignUpStatus}</h3></StyledErrMessage>
-            <StyledButton onClick={signup}>Sign Up</StyledButton>
-            <StyledLink onClick={() => {navigate('/login')}}>Already have an account?</StyledLink>
-        </div>
-    </Container>
+    <div>
+        <div><img src='https://st2.depositphotos.com/3867453/6458/v/450/depositphotos_64580437-stock-illustration-letter-e-logo-icon-design.jpg' alt='logo'/></div>
+        <TextField id="outlined-basic" label="First Name" variant="outlined" isValid={true} type={"text"} onChange={(event) => {
+            setFirstNameReg(event.target.value);
+        }}/>
+        <TextField id="outlined-basic" label="Last Name" variant="outlined" isValid={true} type={"text"} onChange={(event) => {
+            setLastNameReg(event.target.value);
+        }}/>
+        <TextField id="outlined-basic" label="Username" variant="outlined" isValid={isUsernameValid} type={"text"} onChange={(event) => {
+            setUserNameReg(event.target.value);
+        }}/>
+        <div value={SignUpStatus}><h1>{userNameExist}</h1></div>
+        <TextField id="outlined-basic" label="Email" variant="outlined" isValid={isEmailValid} type={"email"} onChange={(event) => {
+            setEmailReg(event.target.value);
+        }}/>
+        <div value={EmailFormatStatus}><h1>{EmailFormatStatus}</h1></div>
+        <main>
+        <TextField id="outlined-basic" label="Password" variant="outlined" isValid={isPasswordValid} type={showPassword ? "text" : "password"} onChange={(event) => {
+            setPasswordReg(event.target.value);
+        }}/>
+        <button onClick={() => handleClick("originalPassword")}></button>
+    
+        <TextField id="outlined-basic" label="Confirm Password" variant="outlined" isValid={isPasswordValid} type={showConfirmPassword ? "text" : "password"} onChange={(event) => {
+            setReEnterPasswordReg(event.target.value);
+        }}/>
+        <button onClick={() => handleClick("confirmPassword")}></button>
+        </main>
+        <div><h1>{PasswordStatus}</h1></div>
+        <div error={isError} value={SignUpStatus}><h3>{SignUpStatus}</h3></div>
+        <button onClick={signup}>Sign Up</button>
+        <a onClick={() => {navigate('/login')}}>Already have an account?</a>
+    </div>
   )
 }
 

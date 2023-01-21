@@ -1,7 +1,4 @@
 import React, {useState} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { Logo, Container , StyledLink, StyledInput, StyledButton, StyledErrMessage, ShowPasswordButton3} from './styles/SingUp.style';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,23 +34,23 @@ function Login() {
     
 
   return (
-    <Container>
+    <div>
         <div>
-            <Logo><img src='https://st2.depositphotos.com/3867453/6458/v/450/depositphotos_64580437-stock-illustration-letter-e-logo-icon-design.jpg' alt='logo'/></Logo>
-            <StyledErrMessage error={UserDetailsValid} value={LoginStatus}><h3>{LoginStatus}</h3></StyledErrMessage>
-            <StyledInput isValid={UserDetailsValid} placeholder={"Username"} type={"text"} onChange={(event) => {
+            <div><img src='https://st2.depositphotos.com/3867453/6458/v/450/depositphotos_64580437-stock-illustration-letter-e-logo-icon-design.jpg' alt='logo'/></div>
+            <div error={UserDetailsValid} value={LoginStatus}><h3>{LoginStatus}</h3></div>
+            <input isValid={UserDetailsValid} placeholder={"Username"} type={"text"} onChange={(event) => {
                 setUserName(event.target.value);
             }}/>
-            <StyledInput isValid={UserDetailsValid} placeholder={"Password"} type={showPassword ? "text" : "password"} onChange={(event) => {
+            <input isValid={UserDetailsValid} placeholder={"Password"} type={showPassword ? "text" : "password"} onChange={(event) => {
                 setPassword(event.target.value);
             }}/>
             <span>
-              <ShowPasswordButton3 onClick={() => handleClick("originalPassword")}><FontAwesomeIcon icon={faEyeSlash} /></ShowPasswordButton3>
+              <button onClick={() => handleClick("originalPassword")}></button>
             </span>
-            <StyledButton onClick={login}>Login</StyledButton>
-            <StyledLink onClick={() => {navigate("/signup")}}>Don't have an account yet?</StyledLink>
+            <button onClick={login}>Login</button>
+            <a onClick={() => {navigate("/signup")}}>Don't have an account yet?</a>
         </div>
-    </Container>
+    </div>
   )
 }
 
