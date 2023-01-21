@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-// import './SignUp.css';
-import { Logo, Container , StyledLink, StyledInput, StyledButton, StyledErrMessage} from './styles/SingUp.style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { Logo, Container , StyledLink, StyledInput, StyledButton, StyledErrMessage, ShowPasswordButton1, ShowPasswordButton2} from './styles/SingUp.style';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,6 +24,19 @@ function SignUp() {
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isUsernameValid, setIsUsernameValid] = useState(true);
     const [isError, setIsError] = useState(true);
+    //Reveal Password
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const handleClick = (whichPassword) => {
+        if (whichPassword === "originalPassword") setShowPassword(!showPassword);
+        else setShowConfirmPassword(!showConfirmPassword);
+    }
+
+    function titleCase(str) {
+        return str.split(' ').map(item => 
+               item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()).join(' ');
+      }
 
     const signup = async () => {
 
@@ -61,10 +75,10 @@ function SignUp() {
         }
 
         if(allGood){
-            await Axios.post('http://localhost:5000/signup', { firstname: firstNameReg, 
-                                lastname: lastNameReg, 
-                                username: userNameReg, 
-                                email: emailReg, 
+            await Axios.post('http://localhost:5000/signup', { firstname: titleCase(firstNameReg), 
+                                lastname: titleCase(lastNameReg), 
+                                username: userNameReg.toLocaleLowerCase(), 
+                                email: emailReg.toLocaleLowerCase(), 
                                 password: passwordReg }).then((response) => {
                                 console.log(response) 
                                 })
@@ -95,12 +109,17 @@ function SignUp() {
                 setEmailReg(event.target.value);
             }}/>
             <StyledErrMessage value={EmailFormatStatus}><h1>{EmailFormatStatus}</h1></StyledErrMessage>
-            <StyledInput isValid={isPasswordValid} placeholder={"Password"} type={"password"} onChange={(event) => {
+            <main>
+            <StyledInput isValid={isPasswordValid} placeholder={"Password"} type={showPassword ? "text" : "password"} onChange={(event) => {
                 setPasswordReg(event.target.value);
             }}/>
-            <StyledInput isValid={isPasswordValid} placeholder={"Confirm Password"} type={"password"} onChange={(event) => {
+            <ShowPasswordButton1 onClick={() => handleClick("originalPassword")}><FontAwesomeIcon icon={faEyeSlash} /></ShowPasswordButton1>
+        
+            <StyledInput isValid={isPasswordValid} placeholder={"Confirm Password"} type={showConfirmPassword ? "text" : "password"} onChange={(event) => {
                 setReEnterPasswordReg(event.target.value);
             }}/>
+            <ShowPasswordButton2 onClick={() => handleClick("confirmPassword")}><FontAwesomeIcon icon={faEyeSlash} /></ShowPasswordButton2>
+            </main>
             <StyledErrMessage><h1>{PasswordStatus}</h1></StyledErrMessage>
             <StyledErrMessage error={isError} value={SignUpStatus}><h3>{SignUpStatus}</h3></StyledErrMessage>
             <StyledButton onClick={signup}>Sign Up</StyledButton>
