@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField'
 
 function Login() {
     const navigate = useNavigate();
@@ -35,21 +36,19 @@ function Login() {
 
   return (
     <div>
-        <div>
-            <div><img src='https://st2.depositphotos.com/3867453/6458/v/450/depositphotos_64580437-stock-illustration-letter-e-logo-icon-design.jpg' alt='logo'/></div>
-            <div error={UserDetailsValid} value={LoginStatus}><h3>{LoginStatus}</h3></div>
-            <input isValid={UserDetailsValid} placeholder={"Username"} type={"text"} onChange={(event) => {
-                setUserName(event.target.value);
-            }}/>
-            <input isValid={UserDetailsValid} placeholder={"Password"} type={showPassword ? "text" : "password"} onChange={(event) => {
-                setPassword(event.target.value);
-            }}/>
-            <span>
-              <button onClick={() => handleClick("originalPassword")}></button>
-            </span>
-            <button onClick={login}>Login</button>
-            <a onClick={() => {navigate("/signup")}}>Don't have an account yet?</a>
-        </div>
+        {/* <div><img src='https://st2.depositphotos.com/3867453/6458/v/450/depositphotos_64580437-stock-illustration-letter-e-logo-icon-design.jpg' alt='logo'/></div>
+        <div error={UserDetailsValid} value={LoginStatus}><h3>{LoginStatus}</h3></div> */}
+        <TextField id="outlined-basic" label="Username" variant="outlined" isValid={UserDetailsValid} type={"text"} onChange={(event) => {
+            setUserName(event.target.value);
+        }}/>
+        <TextField id="outlined-basic" label="Password" variant="outlined" isValid={UserDetailsValid} type={showPassword ? "text" : "password"} onChange={(event) => {
+            setPassword(event.target.value);
+        }}/>
+        {/* <span>
+          <button onClick={() => handleClick("originalPassword")}></button>
+        </span> */}
+        {/* <button onClick={login}>Login</button>
+        <href onClick={() => {navigate("/signup")}}>Don't have an account yet?</href>    */}
     </div>
   )
 }

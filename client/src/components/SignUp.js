@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField'
 
 function SignUp() {
     //Values
@@ -107,7 +107,6 @@ function SignUp() {
             setEmailReg(event.target.value);
         }}/>
         <div value={EmailFormatStatus}><h1>{EmailFormatStatus}</h1></div>
-        <main>
         <TextField id="outlined-basic" label="Password" variant="outlined" isValid={isPasswordValid} type={showPassword ? "text" : "password"} onChange={(event) => {
             setPasswordReg(event.target.value);
         }}/>
@@ -117,11 +116,10 @@ function SignUp() {
             setReEnterPasswordReg(event.target.value);
         }}/>
         <button onClick={() => handleClick("confirmPassword")}></button>
-        </main>
         <div><h1>{PasswordStatus}</h1></div>
         <div error={isError} value={SignUpStatus}><h3>{SignUpStatus}</h3></div>
         <button onClick={signup}>Sign Up</button>
-        <a onClick={() => {navigate('/login')}}>Already have an account?</a>
+        <href onClick={() => {navigate('/login')}}>Already have an account?</href>
     </div>
   )
 }
